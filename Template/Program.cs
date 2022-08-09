@@ -1,8 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Template.Data.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+var connetionString = builder.Configuration.GetConnectionString("TemplateDB") ?? string.Empty;
+
+builder.Services.AddSqlServer<TemplateContext>(connetionString);
 
 var app = builder.Build();
 
