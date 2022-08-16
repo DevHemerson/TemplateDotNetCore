@@ -7,6 +7,7 @@ using Template.Data.Context;
 using Template.Data.Repositories;
 using Template.Domain.Interfaces;
 using Template.IoC;
+using Template.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
 
+builder.Services.AddSwaggerConfiguration();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,7 +39,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseSwaggerConfiguration();
 
 app.MapControllerRoute(
     name: "default",
