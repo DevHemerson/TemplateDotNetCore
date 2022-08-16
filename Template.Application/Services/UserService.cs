@@ -1,17 +1,45 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template.Application.Interfaces;
+using Template.Application.ViewModels;
+using Template.Domain.Entities;
+using Template.Domain.Interfaces;
 
 namespace Template.Application.Services
 {
     public class UserService : IUserService
     {
-        public void Test()
-        {
+        private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
 
+        public UserService(IUserRepository userRepository, IMapper mapper)
+        {
+            this.userRepository = userRepository;
+            this.mapper = mapper;
+        }
+
+        public List<UserViewModel> Get()
+        {
+            List<UserViewModel> _userViewModels = new List<UserViewModel>();
+
+            IEnumerable<User> _user = this.userRepository.GetAll();
+
+            _userViewModels = mapper.Map<List<UserViewModel>>(_user);
+
+            return _userViewModels;
+        }
+
+        public bool Post(UserViewModel userViewModel)
+        {
+            User _user = mapper.Map<User>(userViewModel);
+
+            this.userRepository.Create(_user);
+            
+            return true;
         }
     }
 }

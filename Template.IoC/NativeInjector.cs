@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Template.Application.Interfaces;
 using Template.Application.Services;
+using Template.Data.Repositories;
+using Template.Domain.Interfaces;
 
 namespace Template.IoC
 {
@@ -8,7 +10,17 @@ namespace Template.IoC
     {
         public static void RegisterServces(IServiceCollection services)
         {
+            #region Service
+
             services.AddScoped<IUserService, UserService>();
+
+            #endregion
+
+            #region Repositories
+
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            #endregion
         }
     }
 }

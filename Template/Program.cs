@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Template.Application.AutoMapper;
 using Template.Application.Interfaces;
 using Template.Application.Services;
 using Template.Data.Context;
+using Template.Data.Repositories;
+using Template.Domain.Interfaces;
 using Template.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,10 @@ var connetionString = builder.Configuration.GetConnectionString("TemplateDB") ??
 builder.Services.AddSqlServer<TemplateContext>(connetionString);
 
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperSetup));
 
 var app = builder.Build();
 
